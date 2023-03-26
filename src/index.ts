@@ -11,21 +11,21 @@ const startServer = async () => {
 
   const typeDefs = gql`
     type Query {
-    boards: [Board]
+    users: [User]
   }
 
-  type Board {
+  type User {
     id: ID!
-    title: String!
-    description: String
-    path: String!
+    name: String!
+    last_login: DateTime
+    created_at: DateTime
   }
   `;
 
   const resolvers = {
     Query: {
-      boards: () => {
-        return prisma.board.findMany()
+      users: () => {
+        return prisma.user.findMany()
       }
     },
   };
