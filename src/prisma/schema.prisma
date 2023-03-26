@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,11 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Board {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  title       String
-  description String?
-  path        String    @unique
+// Define the data model for a User
+model User {
+  user_id     Int      @id @default(autoincrement())
+  name        String
+  last_login  DateTime
+  created_at  DateTime @default(now())
+  profile     String?
+
+  // Define the one-to-many relationship between User and Wishlist
+  wishlists   Wishlist[]
+}
+
+// Define the data model for a Wishlist
+model Wishlist {
+  wishlist_id Int      @id @default(autoincrement())
+  length      Int
+  created_at  DateTime @default(now())
+  edited_at   DateTime?
+  followers   Int
+  item_ids    Int[]
+
+  // Define the many-to-one relationship between Wishlist and User
+  user        User     @relation(fields: [user_id], references: [user_id])
+  user_id     Int
+  // Define the one-to-many relationship between Wishlist and WishlistItem
+  wishlist_items WishlistItem[]
+}
+
+// Define the data model for a WishlistItem
+model WishlistItem {
+  item_id     Int      @id @default(autoincrement())
+  URL         String
+  image       String
+  description String
+  viewedBy    Int[]
+  created_at  DateTime @default(now())
+  hidden      Boolean
+  purchased   Boolean
+
+  // Define the many-to-one relationship between WishlistItem and Wishlist
+  wishlist    Wishlist @relation(fields: [wishlist_id], references: [wishlist_id])
+  wishlist_id Int
 }
