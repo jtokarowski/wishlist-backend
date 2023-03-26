@@ -1,12 +1,15 @@
 {
     "compilerOptions": {
-      "rootDirs": ["src"],
-      "outDir": "dist",
-      "lib": ["es2020"],
-      "target": "es2020",
-      "module": "esnext",
-      "moduleResolution": "node",
+      "target": "es6",
+      "module": "commonjs",
+      "lib": ["es6"],
+      "allowJs": true,
+      "outDir": "build",
+      "rootDir": "src",
+      "strict": true,
+      "noImplicitAny": true,
       "esModuleInterop": true,
-      "types": ["node"]
+      "resolveJsonModule": true
     }
   }
+  
